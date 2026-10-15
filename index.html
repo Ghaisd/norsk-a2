@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#faf7f0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Norsk A2 - hundre steg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #2f6b4f;
+    --accent-dark: #26543f;
+    --bg: #faf7f0;
+    --ink: #1c1917;
+    --muted: #78716c;
+    --faint: #a8a29e;
+    --line: #e7e2d8;
+    --card: #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 1.5rem 1.25rem 2.5rem;
+    padding-top: max(1.5rem, env(safe-area-inset-top));
+    padding-bottom: max(2.5rem, env(safe-area-inset-bottom));
+    line-height: 1.5;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wrap { max-width: 28rem; margin: 0 auto; }
+  .label { letter-spacing: 0.18em; font-size: 11px; font-weight: 500; text-transform: uppercase; }
+
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem; }
+  .brand { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 1rem; color: var(--muted); }
+  .gear-btn {
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 999px;
+    width: 40px; height: 40px;
+    cursor: pointer;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gear-btn:active { background: var(--bg); }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .lyd-banner {
+    background: #eaf2ec;
+    border: 1px solid #cadfd0;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    font-size: 0.85rem;
+    color: #2c5a40;
+    line-height: 1.55;
+    margin-bottom: 1.75rem;
+  }
+  .lyd-banner button {
+    background: none; border: none;
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  header.step-header { text-align: center; margin-bottom: 1.9rem; }
+  .step-label { color: var(--muted); margin-bottom: 0.6rem; }
+  .step-num { font-family: 'Fraunces', Georgia, serif; font-size: 5.5rem; font-weight: 500; line-height: 1; margin-bottom: 0.35rem; }
+  .step-of { font-family: 'Fraunces', Georgia, serif; color: var(--faint); font-size: 0.875rem; font-style: italic; }
+
+  section.step-body { margin-bottom: 2.25rem; }
+  .block-title { text-align: center; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .step-title {
+    text-align: center;
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .block-min { text-align: center; color: var(--muted); font-size: 0.85rem; margin-bottom: 0.9rem; }
+  .note {
+    text-align: center;
+    color: #57534e;
+    font-style: italic;
+    font-size: 0.85rem;
+    margin-bottom: 1.4rem;
+    line-height: 1.6;
+  }
+  .tip {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 0.8rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #44403c;
+    margin-bottom: 1.1rem;
+  }
+  .play-all-row { text-align: center; margin-bottom: 0.4rem; }
+
+  ul.items { list-style: none; }
+  li.item { border-bottom: 1px solid var(--line); padding: 0.9rem 0; }
+  li.item:last-child { border-bottom: none; }
+  .item-row { display: flex; gap: 0.875rem; align-items: flex-start; }
+  input[type="checkbox"] {
+    accent-color: var(--accent);
+    width: 24px; height: 24px;
+    margin-top: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .item-text { flex: 1; min-width: 0; cursor: pointer; }
+  .item-name.sent {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 1.4;
+  }
+  .item-name.checked { text-decoration: line-through; color: var(--faint); }
+  .item-spec { font-size: 0.83rem; color: var(--muted); margin-top: 2px; }
+  .item-controls { display: flex; gap: 0.35rem; flex-shrink: 0; align-items: center; margin-top: 1px; }
+  .play-btn {
+    width: 40px; height: 40px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    padding: 0;
+  }
+  .play-btn svg { width: 15px; height: 15px; display: block; }
+  .play-btn.playing { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .play-btn.muted { color: #d6d3d1; border-style: dashed; cursor: default; }
+  .slow-btn {
+    height: 40px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--card);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0 0.65rem;
+  }
+  .slow-btn.playing { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .slow-btn.muted { color: #d6d3d1; border-style: dashed; cursor: default; }
+  .seq-btn {
+    height: 40px;
+    border-radius: 999px;
+    border: 1.5px solid var(--ink);
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0 1rem;
+  }
+  .seq-btn.playing { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .done-btn {
+    width: 100%;
+    margin-top: 1.9rem;
+    padding: 1.05rem;
+    border: none;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-family: inherit;
+    background: var(--line);
+    color: var(--faint);
+    cursor: not-allowed;
+    transition: background 0.2s, color 0.2s;
+    border-radius: 0;
+  }
+  .done-btn.ready { background: var(--accent); color: var(--bg); cursor: pointer; }
+  .done-btn.ready:active { background: var(--accent-dark); }
+
+  .grid-section { border-top: 1px solid var(--line); padding-top: 1.9rem; margin-bottom: 1.9rem; }
+  .grid-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.1rem; }
+  .grid-header .label { color: var(--muted); }
+  .grid-count { font-family: 'Fraunces', Georgia, serif; font-size: 1rem; color: #44403c; }
+  .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin-bottom: 0.7rem; }
+  .square {
+    aspect-ratio: 1;
+    background: var(--line);
+    border: none;
+    border-radius: 2px;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s, border 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 0;
+  }
+  .square.done { background: var(--accent); }
+  .square.current { background: var(--bg); border: 2px solid var(--accent); }
+  .square.selected { outline: 2px solid #44403c; outline-offset: 2px; }
+  .square:active { transform: scale(0.92); }
+  .square-info { min-height: 1.25rem; text-align: center; font-size: 0.8rem; color: #57534e; font-style: italic; }
+
+  .footer-actions {
+    text-align: center;
+    margin-top: 1.4rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: center;
+    gap: 1.4rem;
+  }
+  .text-btn {
+    background: none;
+    border: none;
+    color: var(--faint);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0.5rem;
+  }
+  .text-btn:hover { color: #44403c; }
+  .text-btn:disabled { color: #d6d3d1; cursor: not-allowed; text-decoration: none; }
+
+  .finished { text-align: center; padding: 4rem 0; }
+  .finished .big { font-family: 'Fraunces', Georgia, serif; font-size: 4rem; font-weight: 500; margin-bottom: 1rem; }
+  .welcome-back { text-align: center; color: #78716c; font-style: italic; font-size: 0.85rem; margin-bottom: 1rem; }
+
+  dialog {
+    border: 1px solid var(--line);
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 0;
+    max-width: 26rem;
+    width: calc(100% - 2rem);
+    color: var(--ink);
+  }
+  dialog::backdrop { background: rgba(28, 25, 23, 0.45); }
+  .dlg-inner { padding: 1.4rem; max-height: 82vh; overflow-y: auto; }
+  .dlg-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.1rem; }
+  .dlg-title { font-family: 'Fraunces', Georgia, serif; font-size: 1.25rem; font-weight: 500; }
+  .dlg-close { background: none; border: none; font-size: 1.5rem; line-height: 1; color: var(--muted); cursor: pointer; padding: 0.3rem 0.5rem; }
+  .dlg-sec {
+    letter-spacing: 0.16em;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 1.3rem 0 0.6rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .dlg-sec:first-of-type { margin-top: 0; }
+  .dlg-line { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.55rem 0; font-size: 0.88rem; }
+  .dlg-btn {
+    border: 1px solid var(--ink);
+    background: var(--card);
+    color: var(--ink);
+    border-radius: 4px;
+    padding: 0.45rem 0.85rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+    min-height: 40px;
+  }
+  .dlg-btn.danger { border-color: #8b2c2a; color: #8b2c2a; }
+  .dlg-info { font-size: 0.8rem; color: var(--muted); line-height: 1.55; margin: 0.35rem 0 0.6rem; }
+  .lyd-status { font-size: 0.85rem; margin-bottom: 0.6rem; }
+  .lyd-status .st-ok { color: #3d5a3d; font-weight: 500; }
+  .lyd-status .st-no { color: #8b2c2a; font-weight: 500; }
+
+  .toast {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(90px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 0.7rem 1.25rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 60;
+    pointer-events: none;
+    max-width: 92vw;
+    text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (min-width: 380px) { .grid { gap: 5px; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<dialog id="settings" aria-labelledby="dlgTitle">
+  <div class="dlg-inner">
+    <div class="dlg-head">
+      <div class="dlg-title" id="dlgTitle">Innstillinger / Settings</div>
+      <button class="dlg-close" onclick="closeSettings()" aria-label="Lukk">&times;</button>
+    </div>
+
+    <div class="dlg-sec">Lyd / Sound</div>
+    <div class="lyd-status" id="lydStatus"></div>
+    <div class="dlg-line">
+      <span>Last inn lydfiler / Load mp3 files</span>
+      <button class="dlg-btn" onclick="document.getElementById('lydFiles').click()">Velg filer</button>
+    </div>
+    <div class="dlg-line">
+      <span>Fjern innlastet lyd / Remove loaded sound</span>
+      <button class="dlg-btn danger" onclick="clearLyd()">Fjern</button>
+    </div>
+    <input type="file" id="lydFiles" multiple accept="audio/mpeg,audio/mp3,audio/*" hidden>
+    <div class="dlg-info">Lydpakken lages en gang med generer_lyd.mjs (mappe: lyd-a2). Ligger mappen ved siden av denne filen, virker alt av seg selv. / The sound pack is generated once with generer_lyd.mjs (folder: lyd-a2). If the folder sits next to this file, everything just works.</div>
+
+    <div class="dlg-sec">Framgang / Progress</div>
+    <div class="dlg-line">
+      <span>Start helt på nytt / Start over</span>
+      <button class="dlg-btn danger" onclick="resetAll()">Nullstill</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+'use strict';
+
+const STORAGE_KEY = 'hundred-steps-norsk-a2-v1';
+const TOTAL = 100;
+const LYD_DIR = 'lyd-a2';
+
+/* ==================================================================
+   AUDIO MANIFEST - single source of truth for all 500 clips.
+   generer_lyd.mjs reads this block straight from the HTML file:
+   node generer_lyd.mjs norsk-a2.html --out lyd-a2
+   Do not rename the markers.
+   ================================================================== */
+/*MANIFEST-START*/
+const MAN = {
+"s001a":"Jeg heter Ali og er trettito år.","s001b":"Jeg kommer fra Syria, men bor i Norge nå.","s001c":"Jeg flyttet hit for tre år siden.","s001d":"Nå snakker jeg ganske godt norsk.","s001e":"Jeg lærer fortsatt noe nytt hver dag.",
+"s002a":"Da jeg kom til Norge, var alt nytt.","s002b":"Jeg forsto nesten ingenting.","s002c":"De første månedene var vanskelige.","s002d":"Men folk hjalp meg mye.","s002e":"Nå føler jeg meg hjemme her.",
+"s003a":"Jeg bor sammen med familien min.","s003b":"Vi er fire: meg, kona mi og to barn.","s003c":"Barna ble født i Norge.","s003d":"De snakker norsk bedre enn meg!","s003e":"Vi snakker to språk hjemme.",
+"s004a":"Hverdagen vår er ganske travel.","s004b":"Jeg jobber, og barna går på skolen.","s004c":"Om ettermiddagen lager vi middag sammen.","s004d":"Etterpå hjelper jeg barna med lekser.","s004e":"Kveldene er rolige og fine.",
+"s005a":"I fritiden liker jeg å trene.","s005b":"Jeg spiller fotball hver torsdag.","s005c":"Kona mi liker å lese bøker.","s005d":"I helgene går vi ofte på tur.","s005e":"Vi prøver å være mye ute.",
+"s006a":"Jeg lærer norsk fordi jeg bor her.","s006b":"Jeg trener fordi det gir energi.","s006c":"Vi går tur fordi barna trenger frisk luft.","s006d":"Jeg legger meg tidlig fordi jeg må opp klokka seks.","s006e":"Alt blir lettere fordi jeg øver hver dag.",
+"s007a":"Jeg har en nabo som heter Bjørn.","s007b":"Han er en mann som hjelper alle.","s007c":"I fjor hjalp han meg med bilen.","s007d":"Vi drikker ofte kaffe sammen på lørdager.","s007e":"Gode naboer betyr mye.",
+"s008a":"Før bodde jeg i en stor by.","s008b":"Nå bor jeg på et lite sted.","s008c":"Før var jeg alltid stresset.","s008d":"Nå har jeg mer ro i livet.","s008e":"Livet mitt har forandret seg mye.",
+"s009a":"I dag våknet jeg klokka seks.","s009b":"Jeg lagde kaffe og smurte matpakker.","s009c":"Barna kledde på seg selv.","s009d":"Vi rakk bussen akkurat.","s009e":"Morgenen gikk overraskende bra.",
+"s010a":"Norsk var veldig vanskelig i begynnelsen.","s010b":"Uttalen var det verste.","s010c":"Jeg øvde litt hver eneste dag.","s010d":"Nå forstår jeg nesten alt på TV.","s010e":"Å snakke er fortsatt litt skummelt.",
+"s011a":"Jeg har lært mye de siste årene.","s011b":"Jeg har lært å stå på ski.","s011c":"Jeg har lært å like brunost.","s011d":"Jeg har til og med lært å elske regn.","s011e":"Man kan lære alt hvis man vil.",
+"s012a":"Drømmen min er å få fast jobb.","s012b":"Jeg vil også ta førerkort snart.","s012c":"Kanskje vi kjøper leilighet om noen år.","s012d":"Barna skal få en trygg oppvekst.","s012e":"Man må ha noe å se fram til.",
+"s013a":"Bestevennen min heter Sara.","s013b":"Vi møttes på norskkurset for to år siden.","s013c":"Hun kommer fra Polen.","s013d":"Vi øver norsk sammen hver uke.","s013e":"Med henne er alt mye morsommere.",
+"s014a":"Jeg prøver å leve sunt.","s014b":"Jeg spiser mer grønnsaker enn før.","s014c":"Jeg røyker ikke lenger.","s014d":"Jeg sover sju timer hver natt.","s014e":"Små valg gjør stor forskjell.",
+"s015a":"Jeg bruker mobilen til nesten alt.","s015b":"Jeg betaler regninger i nettbanken.","s015c":"Vi vippser hverandre penger.","s015d":"Barna spiller litt for mye.","s015e":"Vi har mobilfri middag hver dag.",
+"s016a":"Været i Norge forandrer seg fort.","s016b":"I går var det sol, i dag regner det.","s016c":"Mørketiden kan være tung.","s016d":"Derfor tenner vi mange lys.","s016e":"Man må lage sin egen hygge.",
+"s017a":"Hjemme lager vi mat fra to land.","s017b":"Mandag er det norsk middag.","s017c":"Fredag lager jeg mat fra hjemlandet.","s017d":"Barna elsker begge deler.","s017e":"Mat bringer familien sammen.",
+"s018a":"Å være ny et sted er ikke lett.","s018b":"Man må tørre å spørre om hjelp.","s018c":"Man må tåle å gjøre feil.","s018d":"Hver feil lærer deg noe.","s018e":"Etter hvert blir alt lettere.",
+"s019a":"I helga besøkte vi noen venner.","s019b":"Vi grillet ute selv om det var kaldt.","s019c":"Barna lekte i hagen hele kvelden.","s019d":"Vi voksne satt og pratet lenge.","s019e":"Det var akkurat det vi trengte.",
+"s020a":"Livet i Norge er annerledes, men godt.","s020b":"Jeg savner fortsatt hjemlandet av og til.","s020c":"Samtidig er jeg glad for mulighetene her.","s020d":"Man kan være glad i to land.","s020e":"Hjemme er der familien er.",
+"s021a":"Jeg jobber som lagermedarbeider.","s021b":"Jeg har jobbet der i to år.","s021c":"Arbeidsdagen starter klokka sju.","s021d":"Vi er et godt team på jobben.","s021e":"Jeg trives, men vil lære mer.",
+"s022a":"I fjor var jeg på jobbintervju.","s022b":"Jeg var kjempenervøs før intervjuet.","s022c":"De spurte om erfaringen min.","s022d":"Jeg svarte rolig og ærlig.","s022e":"Dagen etter fikk jeg jobben!",
+"s023a":"Jeg skriver en søknad i kveld.","s023b":"CV-en min er nesten ferdig.","s023c":"En venn leser gjennom teksten for meg.","s023d":"Jeg søker på tre jobber denne uka.","s023e":"Man må bare fortsette å prøve.",
+"s024a":"Vi har møte hver mandag morgen.","s024b":"Sjefen går gjennom planen for uka.","s024c":"Jeg tør å stille spørsmål nå.","s024d":"Før satt jeg bare stille.","s024e":"Det føles godt å bli hørt.",
+"s025a":"I dag var det veldig travelt på jobben.","s025b":"En kollega var syk, så vi var få.","s025c":"Jeg tok noen ekstra oppgaver.","s025d":"Sjefen takket meg etterpå.","s025e":"Sliten, men fornøyd, dro jeg hjem.",
+"s026a":"Lønna kommer den femtende hver måned.","s026b":"Jeg sjekker lønnsslippen på mobilen.","s026c":"En del går til skatt.","s026d":"Skatten betaler for skole og sykehus.","s026e":"Systemet er dyrt, men trygt.",
+"s027a":"I forrige uke ble jeg syk.","s027b":"Jeg ringte jobben før klokka åtte.","s027c":"Jeg var hjemme i tre dager.","s027d":"Kollegaene sa: God bedring!","s027e":"Nå er jeg frisk igjen.",
+"s028a":"Jeg har fem uker ferie i året.","s028b":"I sommer skal vi ha tre uker fri.","s028c":"Vi planlegger en tur til Nord-Norge.","s028d":"Resten sparer jeg til jul.","s028e":"Ferie må planlegges tidlig i Norge.",
+"s029a":"I dag var vi på utviklingssamtale.","s029b":"Læreren fortalte om Adams framgang.","s029c":"Han er flink i matte.","s029d":"Han må øve mer på lesing.","s029e":"Vi lager en plan sammen.",
+"s030a":"Barna gjør lekser etter middag.","s030b":"Jeg hjelper til så godt jeg kan.","s030c":"Noen ganger lærer jeg noe nytt selv.","s030d":"Norsk skole er annerledes enn jeg er vant til.","s030e":"Vi finner ut av det sammen.",
+"s031a":"Skolen har dugnad på torsdag.","s031b":"Alle foreldre er invitert.","s031c":"Jeg tar med kaffe og kaker.","s031d":"Vi maler gjerdet og rydder uteområdet.","s031e":"Dugnad er en fin måte å bli kjent på.",
+"s032a":"Jeg skal ta norskprøven i mai.","s032b":"Jeg øver hver kveld etter jobb.","s032c":"Muntlig er lettere enn skriftlig for meg.","s032d":"Målet mitt er nivå A2 eller bedre.","s032e":"Jeg kommer til å klare det.",
+"s033a":"Jobben sendte meg på kurs forrige måned.","s033b":"Kurset handlet om sikkerhet.","s033c":"Jeg fikk et kursbevis etterpå.","s033d":"Nye kurs gir nye muligheter.","s033e":"Jeg sier ja til alt jeg kan lære.",
+"s034a":"Jeg har en kollega som heter Per.","s034b":"Han har jobbet der i tjue år.","s034c":"Han lærer meg triksene på jobben.","s034d":"Jeg lærer ham ord på arabisk.","s034e":"Vi ler mye i lunsjen.",
+"s035a":"Lunsjen er det beste med arbeidsdagen.","s035b":"Vi sitter sammen i kantina.","s035c":"Praten går om helg og familie.","s035d":"Jeg forstår mer og mer av småpraten.","s035e":"Småprat er også språktrening.",
+"s036a":"Noen ganger må jeg ringe kunder.","s036b":"Å snakke i telefon er vanskeligst.","s036c":"Jeg skriver ned det jeg skal si.","s036d":"Etterpå er jeg stolt av meg selv.","s036e":"Øvelse gjør mester.",
+"s037a":"Drømmejobben min er å bli elektriker.","s037b":"Jeg vil ta fagbrev om noen år.","s037c":"Først må jeg bli bedre i norsk.","s037d":"Planen min er klar.","s037e":"Steg for steg kommer jeg dit.",
+"s038a":"Hver morgen leverer jeg Lina i barnehagen.","s038b":"Hun løper rett til vennene sine.","s038c":"De ansatte sier alltid hei.","s038d":"Jeg får beskjeder i en app.","s038e":"Å hente henne er dagens høydepunkt.",
+"s039a":"Adam går på SFO etter skolen.","s039b":"På onsdager har han fotballtrening.","s039c":"Lina begynner på svømming til høsten.","s039d":"Aktiviteter koster litt penger.","s039e":"Men barna får venner og trives.",
+"s040a":"Denne uka har vært god på jobben.","s040b":"Jeg løste et vanskelig problem tirsdag.","s040c":"Sjefen ga meg gode tilbakemeldinger.","s040d":"I morgen er det endelig fredag.","s040e":"Jeg gleder meg til helga.",
+"s041a":"Vi leier en leilighet i andre etasje.","s041b":"Den har tre soverom og en liten balkong.","s041c":"Husleia er ganske høy.","s041d":"Men området er trygt og stille.","s041e":"Vi har det bra her.",
+"s042a":"Vi fant leiligheten på Finn.","s042b":"Vi var på visning en torsdag.","s042c":"Kontrakten skrev vi uka etter.","s042d":"Depositumet var tre måneders leie.","s042e":"Alt gikk heldigvis ryddig for seg.",
+"s043a":"En dag vil vi kjøpe egen bolig.","s043b":"Vi sparer litt hver måned.","s043c":"Banken krever femten prosent egenkapital.","s043d":"Det tar tid, men vi er tålmodige.","s043e":"Egen bolig er en stor drøm i Norge.",
+"s044a":"Strømregningen kom i dag.","s044b":"Den var høyere enn i fjor.","s044c":"Vi dusjer kortere og slukker lyset.","s044d":"Om vinteren koster varme mye.","s044e":"Alle nordmenn snakker om strømpriser.",
+"s045a":"Alle i Norge har en fastlege.","s045b":"Jeg bestiller time på nettet.","s045c":"Legen min er flink til å forklare.","s045d":"Hun tar seg god tid.","s045e":"Det gjør meg trygg.",
+"s046a":"I natt fikk Lina høy feber.","s046b":"Vi ringte legevakten klokka to.","s046c":"De sa vi skulle komme inn.","s046d":"Legen undersøkte henne grundig.","s046e":"Heldigvis var det bare et virus.",
+"s047a":"Jeg hentet medisin på apoteket.","s047b":"Jeg viste legitimasjon i kassa.","s047c":"Farmasøyten forklarte dosen nøye.","s047d":"Reseptene ligger digitalt nå.","s047e":"Systemet er enkelt når man kan det.",
+"s048a":"Tannlege er dyrt for voksne i Norge.","s048b":"Barn går gratis til atten år.","s048c":"Jeg fikk en regning på to tusen.","s048d":"Neste gang pusser jeg bedre!","s048e":"Helse koster, men er verdt det.",
+"s049a":"Jeg meldte meg inn på treningssenter.","s049b":"Medlemskapet koster fire hundre i måneden.","s049c":"Jeg trener tirsdag og lørdag.","s049d":"Ryggen min er mye bedre nå.","s049e":"Beste pengene jeg bruker.",
+"s050a":"Vi lager budsjett hver måned.","s050b":"Husleie og mat tar mest.","s050c":"Vi sparer tusen kroner fast.","s050d":"Uforutsette ting skjer alltid.","s050e":"Med plan sover jeg bedre.",
+"s051a":"BankID er nøkkelen til alt i Norge.","s051b":"Jeg bruker den i banken og hos NAV.","s051c":"Uten BankID stopper livet nesten.","s051d":"Jeg passer godt på kodene mine.","s051e":"Ingen skal noen gang få passordet mitt.",
+"s052a":"I går ringte en falsk bankmann.","s052b":"Han ville ha BankID-koden min.","s052c":"Jeg la på med en gang.","s052d":"Banken ber aldri om koder!","s052e":"Jeg varslet banken etterpå.",
+"s053a":"Jeg hadde møte i banken i dag.","s053b":"Vi snakket om sparing til bolig.","s053c":"Rådgiveren forklarte BSU for meg.","s053d":"Unge kan spare med skattefordel.","s053e":"Jeg åpnet en konto med en gang.",
+"s054a":"Vi har innboforsikring på leiligheten.","s054b":"Den koster hundre kroner i måneden.","s054c":"I fjor mistet jeg mobilen min.","s054d":"Forsikringen dekket en ny.","s054e":"Da var jeg glad for avtalen.",
+"s055a":"Vi kjøper mye brukt på Finn.","s055b":"Barnesykkelen kostet bare to hundre.","s055c":"Vi selger det vi ikke bruker.","s055d":"Gjenbruk sparer penger og miljø.","s055e":"Smart og norsk på samme tid.",
+"s056a":"Jeg klippet meg i går.","s056b":"Frisøren og jeg småpratet hele tiden.","s056c":"Vi snakket om ferieplaner og vær.","s056d":"Jeg forsto nesten alt hun sa.","s056e":"Småprat hos frisøren er eksamen i norsk!",
+"s057a":"Naboen over oss spiller høy musikk.","s057b":"Etter klokka elleve skal det være stille.","s057c":"Jeg banket på og sa ifra rolig.","s057d":"Han beklaget og skrudde ned.","s057e":"Ting løser seg når man snakker sammen.",
+"s058a":"Vasken på badet var tett.","s058b":"Jeg sendte melding til vaktmesteren.","s058c":"Han kom allerede dagen etter.","s058d":"Han fikset det på ti minutter.","s058e":"Jeg takket med kaffe og bolle.",
+"s059a":"Om vinteren er det mørkt klokka fire.","s059b":"Da blir jeg fort trøtt.","s059c":"Jeg tar tran hver morgen.","s059d":"I helgene prøver jeg å være ute i dagslys.","s059e":"Kroppen trenger lys for å fungere.",
+"s060a":"Denne uka har jeg levd sunt.","s060b":"Jeg har gått fem turer.","s060c":"Jeg har spist fisk to ganger.","s060d":"Jeg har lagt meg før elleve.","s060e":"Nå belønner jeg meg med taco!",
+"s061a":"Vi lånte hytta til en kollega.","s061b":"Turen tok tre timer med bil.","s061c":"Hytta ligger ved et lite vann.","s061d":"Der er det verken wifi eller TV.","s061e":"Akkurat det var det beste.",
+"s062a":"På hytta våkner vi uten vekkerklokke.","s062b":"Vi fyrer i ovnen om morgenen.","s062c":"Barna fisker fra brygga.","s062d":"Om kvelden spiller vi kort.","s062e":"Enkelt liv, store øyeblikk.",
+"s063a":"I påsken drar halve Norge på fjellet.","s063b":"Alle spiser appelsin og Kvikk Lunsj.","s063c":"Vi gikk vår første påsketur i år.","s063d":"Sola og snøen sammen er magisk.","s063e":"Nå gleder jeg meg til neste påske.",
+"s064a":"Julaften feirer vi hjemme.","s064b":"Vi spiser pinnekjøtt med naboene.","s064c":"Barna åpner gaver etter middag.","s064d":"Vi går rundt juletreet og synger.","s064e":"Tradisjoner gjør desember varm.",
+"s065a":"På nyttårsaften ser vi fyrverkeri.","s065b":"Vi ønsker hverandre godt nytt år.","s065c":"Jeg lager alltid nyttårsforsetter.","s065d":"I år skal jeg lese flere bøker.","s065e":"Nye år gir nye sjanser.",
+"s066a":"I fjor sommer kjørte vi til Lofoten.","s066b":"Fjellene reiser seg rett fra havet.","s066c":"Vi så midnattssola fra stranda.","s066d":"Barna badet selv om vannet var iskaldt.","s066e":"Norge er vakrere enn postkortene.",
+"s067a":"Vi skal fly til hjemlandet i juli.","s067b":"Jeg sjekket inn bagasjen på automaten.","s067c":"Sikkerhetskontrollen gikk fort i dag.","s067d":"Vi handlet litt på tax-free.","s067e":"Om fire timer lander vi hos familien.",
+"s068a":"Bergensbanen er en berømt togtur.","s068b":"Toget klatrer høyt over fjellet.","s068c":"Utsikten tok pusten fra meg.","s068d":"Jeg tok hundre bilder på veien.","s068e":"Neste gang tar vi hele familien.",
+"s069a":"Jeg tar kjøretimer for tiden.","s069b":"Fartsgrensene er lave her.","s069c":"Om vinteren må man ha vinterdekk.","s069d":"Læreren sier jeg kjører trygt.","s069e":"Oppkjøringen er om to måneder.",
+"s070a":"Naboen kjøpte elbil i fjor.","s070b":"Han lader den hjemme om natten.","s070c":"Halvparten av bilene her er elektriske.","s070d":"Det er stille og rent.","s070e":"Kanskje vi også kjøper elbil en dag.",
+"s071a":"Vi gikk en lang fjelltur i helga.","s071b":"Turen tok fem timer opp og ned.","s071c":"På toppen spiste vi matpakka vår.","s071d":"Utsikten var verdt hvert steg.","s071e":"Fjellvettreglene lærte vi først.",
+"s072a":"Om høsten plukker vi bær i skogen.","s072b":"Blåbær vokser overalt her.","s072c":"Naboen lærer oss om sopp.","s072d":"Man plukker bare det man kjenner.","s072e":"Skogen er et gratis matfat.",
+"s073a":"Nordmenn bader selv når det er kaldt.","s073b":"I vinter prøvde jeg isbading.","s073c":"Første gang skrek jeg høyt.","s073d":"Etterpå følte jeg meg helt ny.","s073e":"Nå bader jeg hver søndag.",
+"s074a":"Den nye jakka mi ble ødelagt etter en uke.","s074b":"Jeg tok den med tilbake til butikken.","s074c":"Jeg viste kvitteringen og forklarte rolig.","s074d":"De ga meg en ny jakke med en gang.","s074e":"Man har gode rettigheter i Norge.",
+"s075a":"Skolen arrangerte loppemarked i helga.","s075b":"Vi fant bøker, leker og en lampe.","s075c":"Alt kostet nesten ingenting.","s075d":"Pengene går til skolekorpset.","s075e":"Loppemarked er lørdagens beste jakt.",
+"s076a":"Biblioteket er mer enn bøker.","s076b":"Der er det språkkafé hver tirsdag.","s076c":"Vi drikker kaffe og snakker norsk.","s076d":"Frivillige retter oss vennlig.","s076e":"Gratis, hyggelig og lærerikt.",
+"s077a":"Jeg er frivillig på fotballkamper.","s077b":"Jeg selger vafler og kaffe.","s077c":"Klubben trenger alle foreldre.","s077d":"Jeg har blitt kjent med mange.","s077e":"Frivillighet åpner dører i Norge.",
+"s078a":"I juni feirer vi sankthans.","s078b":"Vi grillet på stranda med naboene.","s078c":"Barna badet til sola gikk ned.","s078d":"Bålet brant til langt på kveld.","s078e":"Lyse netter er Norges gave.",
+"s079a":"I dag regnet det hele dagen.","s079b":"Vi ble hjemme og bakte boller.","s079c":"Leiligheten luktet kanel og kaffe.","s079d":"Barna bygde hytte av puter.","s079e":"Regnvær kan også være kos.",
+"s080a":"Nå har jeg opplevd alle årstidene.","s080b":"Hver årstid har sin egen skjønnhet.","s080c":"Vinteren var tøffest, våren finest.","s080d":"Jeg gruer meg ikke til mørketiden lenger.","s080e":"Landet føles som mitt nå.",
+"s081a":"Jeg mener at alle bør lære språket.","s081b":"Jeg mener at små byer er best for barn.","s081c":"Hva mener du om det?","s081d":"Vi kan mene forskjellige ting.","s081e":"Gode samtaler tåler uenighet.",
+"s082a":"Vinteren her er kaldere enn hjemme.","s082b":"Men husene er varmere.","s082c":"Maten er dyrere, men lønna er høyere.","s082d":"Livet er roligere enn i storbyen.","s082e":"Alt har to sider.",
+"s083a":"Hvis det blir sol, griller vi i morgen.","s083b":"Hvis bussen er sen, går jeg.","s083c":"Hvis du trenger hjelp, ringer du meg.","s083d":"Hvis man øver, blir man bedre.","s083e":"Livet er fullt av hvis.",
+"s084a":"Da jeg var liten, bodde jeg ved havet.","s084b":"Når jeg blir gammel, vil jeg bo ved havet igjen.","s084c":"Da vi kom hit, kunne vi ingenting.","s084d":"Når vi ser tilbake, ler vi av det.","s084e":"Da er fortid, når er framtid.",
+"s085a":"Vi diskuterer ofte ved middagsbordet.","s085b":"Barna vil ha mer skjermtid.","s085c":"Vi voksne sier: ut og lek!","s085d":"Vi møtes som regel på midten.","s085e":"Familier trenger gode kompromisser.",
+"s086a":"Jeg ser nyheter på NRK hver kveld.","s086b":"Jeg leser også aviser på mobilen.","s086c":"Noen ord slår jeg fortsatt opp.","s086d":"Å følge med gjør meg tryggere.","s086e":"Kunnskap gir bedre samtaler.",
+"s087a":"Neste år skal jeg ta fagbrev.","s087b":"Kona mi skal søke ny jobb.","s087c":"Vi skal male hele leiligheten.","s087d":"Kanskje vi reiser til Italia i høst.","s087e":"Planer gir hverdagen retning.",
+"s088a":"Om fem år eier vi kanskje egen bolig.","s088b":"Barna er store og snakker perfekt norsk.","s088c":"Jeg har forhåpentligvis drømmejobben.","s088d":"Vi har venner rundt middagsbordet.","s088e":"Framtida bygger vi nå.",
+"s089a":"Til deg som er ny: vær tålmodig.","s089b":"Snakk norsk selv om du gjør feil.","s089c":"Si ja til kaffe og dugnad.","s089d":"Spør når du ikke forstår.","s089e":"Du er modigere enn du tror.",
+"s090a":"I dag måtte jeg si nei til sjefen.","s090b":"Jeg kunne ikke ta ekstravakten.","s090c":"Jeg forklarte rolig hvorfor.","s090d":"Han takket for ærligheten.","s090e":"Å si nei er også en ferdighet.",
+"s091a":"Jeg ringte kommunen om barnehageplass.","s091b":"Jeg sto i telefonkø i tjue minutter.","s091c":"Damen svarte på alle spørsmålene mine.","s091d":"Jeg noterte alt hun sa.","s091e":"Etterpå følte jeg meg som en proff.",
+"s092a":"I dag var jeg hos legen uten tolk.","s092b":"Jeg forklarte symptomene selv.","s092c":"Legen forsto meg med en gang.","s092d":"For et år siden var det umulig.","s092e":"Framgang måles i slike øyeblikk.",
+"s093a":"I går skjedde det noe morsomt.","s093b":"Jeg bestilte kaffe, men sa feil ord.","s093c":"Damen lo, og jeg lo med.","s093d":"Vi endte med en lang prat.","s093e":"Feil kan bli fine møter.",
+"s094a":"Ali ringte meg i går kveld.","s094b":"Vi snakket i nesten en time.","s094c":"Han fortalte om den nye jobben sin.","s094d":"Jeg fortalte om norskprøven min.","s094e":"Gode venner løfter hverandre.",
+"s095a":"Kollegaen spurte om helga mi.","s095b":"Jeg fortalte om fjellturen vår.","s095c":"Han anbefalte en ny tursti.","s095d":"Jeg viste bilder fra toppen.","s095e":"Fem minutter småprat, null stress.",
+"s096a":"Jeg ser det litt annerledes.","s096b":"Det er et godt poeng, men...","s096c":"Kan vi se på det på en annen måte?","s096d":"Vi trenger ikke være enige om alt.","s096e":"Respekt gjør uenighet trygg.",
+"s097a":"Jeg er takknemlig for mye.","s097b":"For familien som står sammen.","s097c":"For naboer som bryr seg.","s097d":"For språket som åpner dører.","s097e":"Takknemlighet gjør dagene lysere.",
+"s098a":"Det vanskeligste var å begynne på nytt.","s098b":"Det beste er menneskene jeg har møtt.","s098c":"Jeg har grått, og jeg har ledd.","s098d":"Begge deler hører med.","s098e":"Historien min er ikke ferdig ennå.",
+"s099a":"A2 er snart i boks.","s099b":"Neste mål er B1 til våren.","s099c":"Jeg vil drømme på norsk en dag.","s099d":"Språk er en reise uten slutt.","s099e":"Og jeg elsker å reise.",
+"s100a":"Du har gått hundre steg til!","s100b":"Fem hundre nye setninger sitter i munnen.","s100c":"Du forteller, mener og planlegger på norsk.","s100d":"Det kalles A2, og det er ditt.","s100e":"Neste stopp: B1. Vi ses der!"
+};
+/*MANIFEST-END*/
+
+/* ==================================================================
+   BLOCKS - five arcs, identical routine everywhere.
+   ================================================================== */
+const BLOCKS = [
+  { from: 1, to: 20, title: 'Fortell om deg selv', minutes: 6,
+    note: 'Fem setninger om livet ditt, nå med fortid og fordi. Lytt, og si hver setning høyt tre ganger. / Five sentences about your life, now with past tense and because. Listen, then say each one out loud three times.' },
+  { from: 21, to: 40, title: 'Jobb og skole', minutes: 6,
+    note: 'Språket for jobben, søknader, møter og skolen. / The language for work, applications, meetings and school.' },
+  { from: 41, to: 60, title: 'Hus, helse og penger', minutes: 7,
+    note: 'Bolig, fastlege, bank og BankID: voksenlivet på norsk. / Housing, doctor, bank and BankID: adult life in Norwegian.' },
+  { from: 61, to: 80, title: 'Ute i Norge', minutes: 7,
+    note: 'Hytte, høytider, turer og rettighetene dine. / Cabins, holidays, hikes and your rights.' },
+  { from: 81, to: 100, title: 'Meninger og planer', minutes: 8,
+    note: 'Si hva du mener, sammenlign, og legg planer for framtida. / Say what you think, compare things and make plans for the future.' }
+];
+
+/* Per-step content: t (theme), tip (one line, English), en (5 translations).
+   The 5 Norwegian sentences live in MAN with ids sNNNa..sNNNe. */
+const STEPS = [
+  { t:'Litt om meg', tip:'for tre år siden = three years ago. flyttet = moved (past tense).', en:['My name is Ali and I am thirty-two.','I come from Syria, but live in Norway now.','I moved here three years ago.','Now I speak Norwegian quite well.','I still learn something new every day.'] },
+  { t:'Da jeg kom til Norge', tip:'Da jeg kom = when I came. Past-tense storytelling starts here.', en:['When I came to Norway, everything was new.','I understood almost nothing.','The first months were difficult.','But people helped me a lot.','Now I feel at home here.'] },
+  { t:'Familien', tip:'ble født = was born. bedre enn = better than.', en:['I live together with my family.','We are four: me, my wife and two children.','The children were born in Norway.','They speak Norwegian better than me!','We speak two languages at home.'] },
+  { t:'Hverdagen vår', tip:'Om ettermiddagen = in the afternoon. Time first, then verb.', en:['Our everyday life is quite busy.','I work, and the children go to school.','In the afternoon we make dinner together.','Afterwards I help the children with homework.','The evenings are calm and nice.'] },
+  { t:'Fritiden min', tip:'liker å + verb. prøver å + verb. Two patterns you will use forever.', en:['In my free time I like to exercise.','I play football every Thursday.','My wife likes to read books.','On weekends we often go hiking.','We try to be outside a lot.'] },
+  { t:'Hvorfor? Fordi!', tip:'fordi = because. It glues your sentences together.', en:['I learn Norwegian because I live here.','I exercise because it gives energy.','We go hiking because the children need fresh air.','I go to bed early because I get up at six.','Everything gets easier because I practice every day.'] },
+  { t:'Naboen som hjelper', tip:'som = who/that. En mann som hjelper alle = a man who helps everyone.', en:['I have a neighbour called Bjørn.','He is a man who helps everyone.','Last year he helped me with the car.','We often drink coffee together on Saturdays.','Good neighbours mean a lot.'] },
+  { t:'Før og nå', tip:'Før = before. Nå = now. Compare your two lives.', en:['Before, I lived in a big city.','Now I live in a small place.','Before, I was always stressed.','Now I have more calm in my life.','My life has changed a lot.'] },
+  { t:'En vanlig morgen', tip:'rakk bussen = caught the bus (just in time). A very useful past verb.', en:['Today I woke up at six.','I made coffee and packed lunches.','The children dressed themselves.','We caught the bus just in time.','The morning went surprisingly well.'] },
+  { t:'Språket mitt', tip:'i begynnelsen = in the beginning. hver eneste dag = every single day.', en:['Norwegian was very hard in the beginning.','The pronunciation was the worst.','I practiced a little every single day.','Now I understand almost everything on TV.','Speaking is still a little scary.'] },
+  { t:'Hva jeg har lært', tip:'har lært = have learned. The perfect tense for life experience.', en:['I have learned a lot these last years.','I have learned to ski.','I have learned to like brown cheese.','I have even learned to love rain.','You can learn anything if you want to.'] },
+  { t:'Drømmen min', tip:'fast jobb = permanent job. om noen år = in a few years.', en:['My dream is to get a permanent job.','I also want to get a driving licence soon.','Maybe we buy a flat in a few years.','The children will have a safe childhood.','You need something to look forward to.'] },
+  { t:'En god venn', tip:'møttes = met each other. for to år siden = two years ago.', en:['My best friend is called Sara.','We met at the Norwegian course two years ago.','She comes from Poland.','We practice Norwegian together every week.','With her everything is much more fun.'] },
+  { t:'Kroppen og helsa', tip:'ikke lenger = no longer. mer enn før = more than before.', en:['I try to live healthy.','I eat more vegetables than before.','I no longer smoke.','I sleep seven hours every night.','Small choices make a big difference.'] },
+  { t:'Teknologi', tip:'å vippse = to send money with Vipps. Yes, it is a verb now.', en:['I use my phone for almost everything.','I pay bills in the online bank.','We Vipps each other money.','The children play a bit too much.','We have phone-free dinner every day.'] },
+  { t:'Været og humøret', tip:'mørketiden = the dark season. derfor = therefore.', en:['The weather in Norway changes fast.','Yesterday it was sunny, today it rains.','The dark season can be heavy.','Therefore we light many candles.','You have to make your own cosiness.'] },
+  { t:'Maten hjemme', tip:'begge deler = both. A phrase Norwegians use constantly.', en:['At home we make food from two countries.','Monday it is Norwegian dinner.','Friday I make food from my home country.','The children love both.','Food brings the family together.'] },
+  { t:'Å være ny', tip:'tørre = to dare. tåle = to handle/endure. Two brave verbs.', en:['Being new somewhere is not easy.','You have to dare to ask for help.','You have to handle making mistakes.','Every mistake teaches you something.','Little by little everything gets easier.'] },
+  { t:'Helga som var', tip:'selv om = even though. Unlocks a whole new sentence type.', en:['This weekend we visited some friends.','We grilled outside even though it was cold.','The children played in the garden all evening.','We adults sat and talked for a long time.','It was exactly what we needed.'] },
+  { t:'Mitt nye liv', tip:'samtidig = at the same time. You can hold two feelings at once.', en:['Life in Norway is different, but good.','I still miss my home country sometimes.','At the same time I am glad for the opportunities here.','You can love two countries.','Home is where the family is.'] },
+
+  { t:'Jobben min', tip:'har jobbet der i to år = have worked there for two years.', en:['I work as a warehouse worker.','I have worked there for two years.','The workday starts at seven.','We are a good team at work.','I am happy, but want to learn more.'] },
+  { t:'Jobbintervjuet', tip:'kjempenervøs = super nervous. kjempe- makes everything stronger.', en:['Last year I was at a job interview.','I was super nervous before the interview.','They asked about my experience.','I answered calmly and honestly.','The day after, I got the job!'] },
+  { t:'Å søke jobb', tip:'søknad = application. å søke på = to apply for.', en:['I am writing an application tonight.','My CV is almost finished.','A friend reads through the text for me.','I apply for three jobs this week.','You just have to keep trying.'] },
+  { t:'På jobbmøte', tip:'tør = dare (present). Før satt jeg stille = before, I just sat quietly.', en:['We have a meeting every Monday morning.','The boss goes through the plan for the week.','I dare to ask questions now.','Before, I just sat quietly.','It feels good to be heard.'] },
+  { t:'En travel dag', tip:'så vi var få = so we were few. så = so (result).', en:['Today it was very busy at work.','A colleague was sick, so we were few.','I took some extra tasks.','The boss thanked me afterwards.','Tired but satisfied, I went home.'] },
+  { t:'Lønn og skatt', tip:'lønnsslipp = payslip. skatt = tax. Adult words, useful words.', en:['The salary comes on the fifteenth every month.','I check the payslip on my phone.','A part goes to tax.','The tax pays for schools and hospitals.','The system is expensive, but safe.'] },
+  { t:'Sykemelding', tip:'ble syk = got sick. God bedring! = get well soon!', en:['Last week I got sick.','I called work before eight o clock.','I was home for three days.','My colleagues said: get well soon!','Now I am healthy again.'] },
+  { t:'Ferie fra jobben', tip:'fem uker ferie = five weeks holiday. Yes, really. It is the law.', en:['I have five weeks of holiday per year.','This summer we will have three weeks off.','We are planning a trip to Northern Norway.','The rest I save for Christmas.','Holidays must be planned early in Norway.'] },
+  { t:'Utviklingssamtale', tip:'utviklingssamtale = parent-teacher meeting. You will go to many.', en:['Today we were at a parent-teacher meeting.','The teacher told us about the progress Adam makes.','He is good at maths.','He must practice reading more.','We make a plan together.'] },
+  { t:'Lekser', tip:'så godt jeg kan = as well as I can. vant til = used to.', en:['The children do homework after dinner.','I help as well as I can.','Sometimes I learn something new myself.','Norwegian school is different from what I am used to.','We figure it out together.'] },
+  { t:'Dugnad på skolen', tip:'dugnad = volunteer community work. Say yes. Always say yes.', en:['The school has a dugnad on Thursday.','All parents are invited.','I bring coffee and cakes.','We paint the fence and tidy the outdoor area.','Dugnad is a nice way to get to know people.'] },
+  { t:'Norskprøven', tip:'kommer til å = going to. Confident future!', en:['I will take the Norwegian test in May.','I practice every evening after work.','Oral is easier than written for me.','My goal is level A2 or better.','I am going to make it.'] },
+  { t:'På kurs', tip:'kursbevis = course certificate. Collect them.', en:['Work sent me on a course last month.','The course was about safety.','I got a certificate afterwards.','New courses give new opportunities.','I say yes to everything I can learn.'] },
+  { t:'Kollegaen min', tip:'triksene = the tricks. Learn them from the veterans.', en:['I have a colleague called Per.','He has worked there for twenty years.','He teaches me the tricks at work.','I teach him words in Arabic.','We laugh a lot at lunch.'] },
+  { t:'Lunsjpausen', tip:'småprat = small talk. It is language training in disguise.', en:['Lunch is the best part of the workday.','We sit together in the canteen.','The talk is about weekends and family.','I understand more and more of the small talk.','Small talk is also language practice.'] },
+  { t:'Å ringe på jobb', tip:'Øvelse gjør mester = practice makes perfect. A proverb to live by.', en:['Sometimes I have to call customers.','Talking on the phone is the hardest.','I write down what I am going to say.','Afterwards I am proud of myself.','Practice makes perfect.'] },
+  { t:'Drømmejobben', tip:'fagbrev = trade certificate. Steg for steg = step by step.', en:['My dream job is to become an electrician.','I want to take a trade certificate in a few years.','First I must get better at Norwegian.','My plan is clear.','Step by step I will get there.'] },
+  { t:'Levering i barnehagen', tip:'å levere = to drop off. å hente = to pick up. Parent verbs.', en:['Every morning I drop Lina off at kindergarten.','She runs straight to her friends.','The staff always say hi.','I get messages in an app.','Picking her up is the highlight of the day.'] },
+  { t:'SFO og aktiviteter', tip:'SFO = after-school programme. til høsten = starting this autumn.', en:['Adam goes to after-school care.','On Wednesdays he has football practice.','Lina starts swimming this autumn.','Activities cost some money.','But the children make friends and thrive.'] },
+  { t:'En god arbeidsuke', tip:'tilbakemeldinger = feedback. gleder meg til = looking forward to.', en:['This week has been good at work.','I solved a difficult problem on Tuesday.','The boss gave me good feedback.','Tomorrow it is finally Friday.','I am looking forward to the weekend.'] },
+
+  { t:'Leiligheten vår', tip:'husleie = rent. i andre etasje = on the second floor.', en:['We rent a flat on the second floor.','It has three bedrooms and a small balcony.','The rent is quite high.','But the area is safe and quiet.','We are doing well here.'] },
+  { t:'Å leie bolig', tip:'visning = viewing. depositum = deposit. Finn = the site for everything.', en:['We found the flat on Finn.','We went to a viewing on a Thursday.','We signed the contract the week after.','The deposit was three months of rent.','Luckily everything went smoothly.'] },
+  { t:'Drømmen om å eie', tip:'egenkapital = down payment savings. tålmodig = patient.', en:['One day we want to buy our own home.','We save a little every month.','The bank requires fifteen percent down payment.','It takes time, but we are patient.','Owning a home is a big dream in Norway.'] },
+  { t:'Strøm og regninger', tip:'strøm = electricity. The national conversation topic every winter.', en:['The electricity bill came today.','It was higher than last year.','We shower shorter and turn off the lights.','In winter, heating costs a lot.','All Norwegians talk about electricity prices.'] },
+  { t:'Fastlegen', tip:'fastlege = your regular GP. Everyone in Norway has one.', en:['Everyone in Norway has a regular doctor.','I book appointments online.','My doctor is good at explaining.','She takes her time.','That makes me feel safe.'] },
+  { t:'På legevakten', tip:'legevakt = emergency clinic. For the nights when fever hits.', en:['Last night Lina got a high fever.','We called the emergency clinic at two.','They said we should come in.','The doctor examined her thoroughly.','Luckily it was just a virus.'] },
+  { t:'På apoteket igjen', tip:'legitimasjon = ID. Prescriptions are digital in Norway.', en:['I picked up medicine at the pharmacy.','I showed ID at the counter.','The pharmacist explained the dose carefully.','Prescriptions are digital now.','The system is easy once you know it.'] },
+  { t:'Tannlegeregningen', tip:'gratis til atten = free until eighteen. Adults pay. A lot.', en:['The dentist is expensive for adults in Norway.','Children go free until eighteen.','I got a bill of two thousand.','Next time I will brush better!','Health costs, but it is worth it.'] },
+  { t:'Å trene på studio', tip:'meldte meg inn = signed up. medlemskap = membership.', en:['I signed up at a gym.','The membership costs four hundred a month.','I train Tuesday and Saturday.','My back is much better now.','Best money I spend.'] },
+  { t:'Budsjettet vårt', tip:'uforutsett = unexpected. Budget words calm the mind.', en:['We make a budget every month.','Rent and food take the most.','We save a thousand kroner regularly.','Unexpected things always happen.','With a plan I sleep better.'] },
+  { t:'BankID', tip:'BankID = the digital key to Norway. Guard it with your life.', en:['BankID is the key to everything in Norway.','I use it at the bank and at NAV.','Without BankID life almost stops.','I take good care of my codes.','No one will ever get my password.'] },
+  { t:'Svindel på telefonen', tip:'svindel = fraud. la på = hung up. The bank NEVER asks for codes.', en:['Yesterday a fake bank man called.','He wanted my BankID code.','I hung up right away.','The bank never asks for codes!','I notified the bank afterwards.'] },
+  { t:'I banken', tip:'BSU = savings account for young people with tax benefits.', en:['I had a meeting at the bank today.','We talked about saving for a home.','The advisor explained BSU to me.','Young people can save with tax benefits.','I opened an account right away.'] },
+  { t:'Forsikring', tip:'innboforsikring = home contents insurance. dekket = covered.', en:['We have contents insurance on the flat.','It costs a hundred kroner a month.','Last year I lost my phone.','The insurance covered a new one.','Then I was glad for the deal.'] },
+  { t:'Gjenbruk', tip:'brukt = used/second-hand. gjenbruk = reuse. Very Norwegian, very smart.', en:['We buy a lot second-hand on Finn.','The kids bike cost only two hundred.','We sell what we do not use.','Reuse saves money and the environment.','Smart and Norwegian at the same time.'] },
+  { t:'Hos frisøren, del to', tip:'Small talk at the hairdresser = your real oral exam.', en:['I got a haircut yesterday.','The hairdresser and I chatted the whole time.','We talked about holiday plans and weather.','I understood almost everything she said.','Small talk at the hairdresser is the exam in Norwegian!'] },
+  { t:'Naboklager', tip:'å si ifra = to speak up. Calm and direct works best.', en:['The neighbour above us plays loud music.','After eleven it should be quiet.','I knocked and spoke up calmly.','He apologized and turned it down.','Things get solved when people talk.'] },
+  { t:'Vaktmesteren', tip:'vaktmester = caretaker. tett = clogged.', en:['The sink in the bathroom was clogged.','I sent a message to the caretaker.','He came already the next day.','He fixed it in ten minutes.','I thanked him with coffee and a bun.'] },
+  { t:'Søvn og mørketid', tip:'tran = cod liver oil. Norwegians swear by it in winter.', en:['In winter it is dark at four.','Then I get tired quickly.','I take cod liver oil every morning.','On weekends I try to be out in daylight.','The body needs light to function.'] },
+  { t:'En sunn uke', tip:'har gått, har spist, har lagt meg = the perfect tense of a good week.', en:['This week I have lived healthy.','I have taken five walks.','I have eaten fish twice.','I have gone to bed before eleven.','Now I reward myself with tacos!'] },
+
+  { t:'På vei til hytta', tip:'hytte = cabin. The holy place of Norwegian life.', en:['We borrowed the cabin of a colleague.','The trip took three hours by car.','The cabin lies by a small lake.','There is neither wifi nor TV there.','Exactly that was the best part.'] },
+  { t:'Hyttelivet', tip:'å fyre = to light the fire/stove. brygga = the dock.', en:['At the cabin we wake up without an alarm.','We light the stove in the morning.','The children fish from the dock.','In the evening we play cards.','Simple life, big moments.'] },
+  { t:'Påske på norsk', tip:'Kvikk Lunsj + appelsin + snø = Norwegian Easter. It is the law.', en:['At Easter, half of Norway goes to the mountains.','Everyone eats oranges and Kvikk Lunsj.','We took our first Easter hike this year.','The sun and the snow together are magical.','Now I look forward to next Easter.'] },
+  { t:'Julaften', tip:'pinnekjøtt = traditional Christmas lamb. Traditions vary by family.', en:['Christmas Eve we celebrate at home.','We eat pinnekjøtt with the neighbours.','The children open presents after dinner.','We walk around the tree and sing.','Traditions make December warm.'] },
+  { t:'Nyttårsaften', tip:'nyttårsforsett = new year resolution. sjanser = chances.', en:['On New Years Eve we watch fireworks.','We wish each other a happy new year.','I always make resolutions.','This year I will read more books.','New years give new chances.'] },
+  { t:'Sommerferie i nord', tip:'midnattssola = the midnight sun. Worth the whole drive.', en:['Last summer we drove to Lofoten.','The mountains rise straight from the sea.','We saw the midnight sun from the beach.','The children swam even though the water was ice cold.','Norway is more beautiful than the postcards.'] },
+  { t:'På flyplassen', tip:'sjekke inn = check in. Air travel vocabulary in one scene.', en:['We are flying to my home country in July.','I checked in the luggage at the machine.','Security went fast today.','We shopped a little at the tax-free.','In four hours we land with the family.'] },
+  { t:'Tog gjennom landet', tip:'tok pusten fra meg = took my breath away.', en:['The Bergen line is a famous train ride.','The train climbs high over the mountains.','The view took my breath away.','I took a hundred pictures on the way.','Next time we bring the whole family.'] },
+  { t:'Å kjøre bil i Norge', tip:'kjøretimer = driving lessons. oppkjøring = driving test.', en:['I take driving lessons these days.','The speed limits are low here.','In winter you must have winter tyres.','The instructor says I drive safely.','The driving test is in two months.'] },
+  { t:'Elbilen', tip:'elbil = electric car. Half the country drives one.', en:['The neighbour bought an electric car last year.','He charges it at home at night.','Half the cars here are electric.','It is quiet and clean.','Maybe we also buy one someday.'] },
+  { t:'På fjelltur', tip:'fjellvettreglene = the mountain code. Learn it before the boots.', en:['We took a long mountain hike this weekend.','The hike took five hours up and down.','At the top we ate our packed lunch.','The view was worth every step.','We learned the mountain rules first.'] },
+  { t:'Bær og sopp', tip:'Man plukker bare det man kjenner = only pick what you know. Golden rule.', en:['In autumn we pick berries in the forest.','Blueberries grow everywhere here.','The neighbour teaches us about mushrooms.','You only pick what you know.','The forest is a free pantry.'] },
+  { t:'Isbading', tip:'isbading = ice bathing. Scream first, feel amazing after.', en:['Norwegians swim even when it is cold.','This winter I tried ice bathing.','The first time I screamed out loud.','Afterwards I felt completely new.','Now I swim every Sunday.'] },
+  { t:'Reklamasjon', tip:'reklamasjon = complaint/return. kvittering = receipt. Know your rights.', en:['My new jacket broke after a week.','I took it back to the shop.','I showed the receipt and explained calmly.','They gave me a new jacket right away.','You have good rights in Norway.'] },
+  { t:'På loppemarked', tip:'loppemarked = flea market. skolekorps = school marching band.', en:['The school held a flea market this weekend.','We found books, toys and a lamp.','Everything cost almost nothing.','The money goes to the school band.','The flea market is the best hunt of Saturday.'] },
+  { t:'Språkkafé', tip:'språkkafé = language café. Free coffee, free corrections, free friends.', en:['The library is more than books.','There is a language café every Tuesday.','We drink coffee and speak Norwegian.','Volunteers correct us kindly.','Free, friendly and educational.'] },
+  { t:'Frivillig arbeid', tip:'frivillig = volunteer. It opens more doors than a CV.', en:['I volunteer at football matches.','I sell waffles and coffee.','The club needs all the parents.','I have gotten to know many people.','Volunteering opens doors in Norway.'] },
+  { t:'Sankthans', tip:'sankthans = midsummer, 23 June. Bonfires and bright nights.', en:['In June we celebrate midsummer.','We grilled on the beach with the neighbours.','The children swam until the sun went down.','The bonfire burned late into the evening.','Bright nights are the gift of Norway.'] },
+  { t:'Regnværsdag', tip:'kos = cosiness. Even rain can be kos with cinnamon buns.', en:['Today it rained all day.','We stayed home and baked buns.','The flat smelled of cinnamon and coffee.','The children built a fort of pillows.','Rainy weather can also be cosy.'] },
+  { t:'Et år i Norge', tip:'gruer meg ikke lenger = no longer dread it. Look how far you came.', en:['Now I have experienced all the seasons.','Each season has its own beauty.','Winter was toughest, spring the finest.','I no longer dread the dark season.','The country feels like mine now.'] },
+
+  { t:'Jeg mener at', tip:'Jeg mener at = I think that. Opinions with a subordinate clause!', en:['I think that everyone should learn the language.','I think that small towns are best for children.','What do you think about that?','We can think different things.','Good conversations can handle disagreement.'] },
+  { t:'Sammenligninger', tip:'kaldere enn, varmere, dyrere = comparisons. -ere enn = -er than.', en:['The winter here is colder than back home.','But the houses are warmer.','The food is more expensive, but the salary is higher.','Life is calmer than in the big city.','Everything has two sides.'] },
+  { t:'Hvis-setninger', tip:'hvis = if. Hvis X, så Y. Your planning grammar.', en:['If it is sunny, we grill tomorrow.','If the bus is late, I walk.','If you need help, you call me.','If you practice, you get better.','Life is full of ifs.'] },
+  { t:'Da eller når', tip:'da = one time in the past. når = future or repeated. The classic rule.', en:['When I was little, I lived by the sea.','When I get old, I want to live by the sea again.','When we came here, we knew nothing.','When we look back, we laugh about it.','Da is the past, når is the future.'] },
+  { t:'Å diskutere hjemme', tip:'kompromiss = compromise. på midten = in the middle.', en:['We often discuss at the dinner table.','The children want more screen time.','We adults say: out and play!','We usually meet in the middle.','Families need good compromises.'] },
+  { t:'Nyheter', tip:'å følge med = to keep up/stay informed. slå opp = look up.', en:['I watch the news on NRK every evening.','I also read newspapers on my phone.','Some words I still look up.','Keeping up makes me feel safer.','Knowledge gives better conversations.'] },
+  { t:'Planer for neste år', tip:'skal + verb everywhere. The future is yours to plan.', en:['Next year I will take a trade certificate.','My wife will apply for a new job.','We will paint the whole flat.','Maybe we travel to Italy in autumn.','Plans give everyday life direction.'] },
+  { t:'Om fem år', tip:'om fem år = in five years. forhåpentligvis = hopefully.', en:['In five years we maybe own our own home.','The children are big and speak perfect Norwegian.','I hopefully have my dream job.','We have friends around the dinner table.','We build the future now.'] },
+  { t:'Råd til nye', tip:'Now YOU give the advice. Full circle.', en:['To you who are new: be patient.','Speak Norwegian even if you make mistakes.','Say yes to coffee and dugnad.','Ask when you do not understand.','You are braver than you think.'] },
+  { t:'En vanskelig samtale', tip:'måtte = had to. Saying no politely is advanced life skill.', en:['Today I had to say no to the boss.','I could not take the extra shift.','I explained calmly why.','He thanked me for the honesty.','Saying no is also a skill.'] },
+  { t:'Å ringe kommunen', tip:'telefonkø = phone queue. å notere = to take notes. Pro moves.', en:['I called the municipality about a kindergarten spot.','I waited in the phone queue for twenty minutes.','The lady answered all my questions.','I noted everything she said.','Afterwards I felt like a pro.'] },
+  { t:'Legetime uten tolk', tip:'tolk = interpreter. symptomer = symptoms. Measure your progress here.', en:['Today I was at the doctor without an interpreter.','I explained the symptoms myself.','The doctor understood me right away.','A year ago that was impossible.','Progress is measured in moments like these.'] },
+  { t:'Historien om i går', tip:'skjedde = happened. lo = laughed. Mistakes make stories.', en:['Yesterday something funny happened.','I ordered coffee, but said the wrong word.','The lady laughed, and I laughed too.','We ended up in a long chat.','Mistakes can become nice meetings.'] },
+  { t:'Telefonsamtalen', tip:'fortalte om = told about. Retelling is the A2 superpower.', en:['Ali called me last night.','We talked for almost an hour.','He told me about his new job.','I told him about my Norwegian test.','Good friends lift each other.'] },
+  { t:'Småprat på jobb', tip:'anbefalte = recommended. Five minutes of small talk, zero stress.', en:['My colleague asked about my weekend.','I told him about our mountain hike.','He recommended a new trail.','I showed pictures from the top.','Five minutes of small talk, zero stress.'] },
+  { t:'Å være uenig, pent', tip:'Polite disagreement phrases. Gold in meetings and at home.', en:['I see it a little differently.','That is a good point, but...','Can we look at it another way?','We do not need to agree on everything.','Respect makes disagreement safe.'] },
+  { t:'Takknemlighet', tip:'takknemlig = grateful. som står sammen = who stand together.', en:['I am grateful for a lot.','For the family that stands together.','For neighbours who care.','For the language that opens doors.','Gratitude makes the days brighter.'] },
+  { t:'Det vanskeligste og det beste', tip:'har grått, har ledd = have cried, have laughed. Both belong.', en:['The hardest was starting over.','The best is the people I have met.','I have cried, and I have laughed.','Both belong to the story.','My story is not finished yet.'] },
+  { t:'Neste mål', tip:'i boks = in the bag/done. en reise uten slutt = a journey without end.', en:['A2 is almost in the bag.','The next goal is B1 in spring.','I want to dream in Norwegian one day.','Language is a journey without end.','And I love to travel.'] },
+  { t:'Steg hundre, igjen', tip:'You tell, you argue, you plan, in Norwegian. That is A2. Own it.', en:['You have walked another hundred steps!','Five hundred new sentences sit in your mouth.','You tell, you give opinions and you plan in Norwegian.','It is called A2, and it is yours.','Next stop: B1. See you there!'] }
+];
+
+function ids5(step) {
+  const p = 's' + String(step).padStart(3, '0');
+  return [p + 'a', p + 'b', p + 'c', p + 'd', p + 'e'];
+}
+function blockOf(step) { return BLOCKS.find(b => step >= b.from && step <= b.to); }
+/* ==================================================================
+   STATE - one journey per device, dead simple
+   ================================================================== */
+let state = null;
+let selectedSquare = null;
+
+function defaultState() {
+  return { v: 1, currentStep: 1, completed: [], checks: { step: 1, indices: [] } };
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    state = raw ? JSON.parse(raw) : defaultState();
+  } catch { state = defaultState(); }
+  if (!Array.isArray(state.completed)) state.completed = [];
+  if (!state.currentStep) state.currentStep = 1;
+  if (!state.checks) state.checks = { step: state.currentStep, indices: [] };
+}
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch { toast('Kunne ikke lagre'); }
+}
+
+function todayISO() { return new Date().toISOString().slice(0, 10); }
+function formatDate(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  const m = ['januar','februar','mars','april','mai','juni','juli','august','september','oktober','november','desember'];
+  return d.getDate() + '. ' + m[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+let toastTimer = null;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2300);
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+/* ==================================================================
+   AUDIO ENGINE - IndexedDB first, lyd-a1/ folder second, honest
+   silence third. Pitch-preserving slow playback.
+   ================================================================== */
+const lyd = {
+  mode: 'none',
+  db: null,
+  urls: {},
+  clipCount: 0,
+  el: new Audio(),
+  activeBtn: null,
+  seqStop: false,
+
+  openDb() {
+    return new Promise((resolve) => {
+      let req;
+      try { req = indexedDB.open('norsk-a2-lyd', 1); }
+      catch { return resolve(null); }
+      req.onupgradeneeded = () => req.result.createObjectStore('clips');
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => resolve(null);
+    });
+  },
+
+  countClips() {
+    return new Promise((res) => {
+      if (!this.db) return res(0);
+      try {
+        const tx = this.db.transaction('clips', 'readonly');
+        const rq = tx.objectStore('clips').count();
+        rq.onsuccess = () => res(rq.result);
+        rq.onerror = () => res(0);
+      } catch { res(0); }
+    });
+  },
+
+  async init() {
+    this.el.preload = 'auto';
+    try { this.el.preservesPitch = true; } catch {}
+    try { this.el.webkitPreservesPitch = true; } catch {}
+    if (!this.db) this.db = await this.openDb();
+    this.clipCount = await this.countClips();
+    if (this.clipCount > 0) {
+      this.mode = 'idb';
+      renderLydUi();
+      if (state) render();
+      return;
+    }
+    const probe = new Audio();
+    let settled = false;
+    const done = (mode) => {
+      if (settled) return;
+      settled = true;
+      this.mode = mode;
+      renderLydUi();
+      if (state) render();
+    };
+    probe.oncanplaythrough = () => done('folder');
+    probe.onerror = () => done('none');
+    setTimeout(() => done('none'), 2500);
+    probe.src = LYD_DIR + '/' + Object.keys(MAN)[0] + '.mp3';
+    probe.load();
+  },
+
+  getBlob(id) {
+    return new Promise((res) => {
+      if (!this.db) return res(null);
+      try {
+        const tx = this.db.transaction('clips', 'readonly');
+        const rq = tx.objectStore('clips').get(id);
+        rq.onsuccess = () => res(rq.result || null);
+        rq.onerror = () => res(null);
+      } catch { res(null); }
+    });
+  },
+
+  async srcFor(id) {
+    if (this.mode === 'idb') {
+      if (this.urls[id]) return this.urls[id];
+      const blob = await this.getBlob(id);
+      if (blob) { this.urls[id] = URL.createObjectURL(blob); return this.urls[id]; }
+      return null;
+    }
+    if (this.mode === 'folder') return LYD_DIR + '/' + id + '.mp3';
+    return null;
+  },
+
+  markBtn(btn) {
+    if (this.activeBtn) this.activeBtn.classList.remove('playing');
+    this.activeBtn = btn || null;
+    if (btn) btn.classList.add('playing');
+  },
+
+  async play(id, slow, btn) {
+    this.seqStop = true;
+    if (this.mode === 'none') { toast('Lyd mangler. Se Innstillinger. / No sound loaded yet.'); return; }
+    const src = await this.srcFor(id);
+    if (!src) { toast('Fant ikke klippet ' + id + '.'); return; }
+    try {
+      this.el.pause();
+      this.markBtn(btn);
+      this.el.src = src;
+      this.el.playbackRate = slow ? 0.72 : 1;
+      this.el.onended = () => this.markBtn(null);
+      this.el.onerror = () => { this.markBtn(null); toast('Fant ikke klippet ' + id + '.'); };
+      await this.el.play();
+    } catch { this.markBtn(null); }
+  },
+
+  async playSeq(ids, btn) {
+    if (this.mode === 'none') { toast('Lyd mangler. Se Innstillinger. / No sound loaded yet.'); return; }
+    this.seqStop = false;
+    this.markBtn(btn);
+    for (const id of ids) {
+      if (this.seqStop) break;
+      const src = await this.srcFor(id);
+      if (!src) continue;
+      await new Promise((res) => {
+        this.el.pause();
+        this.el.src = src;
+        this.el.playbackRate = 1;
+        this.el.onended = res;
+        this.el.onerror = res;
+        this.el.play().catch(res);
+      });
+      if (this.seqStop) break;
+      await new Promise(r => setTimeout(r, 500));
+    }
+    this.markBtn(null);
+  },
+
+  async importFiles(files) {
+    if (!this.db) this.db = await this.openDb();
+    if (!this.db) { toast('Nettleseren støtter ikke lagring av lyd'); return; }
+    let stored = 0, skipped = 0;
+    for (const f of files) {
+      const id = f.name.replace(/\.[^.]+$/, '');
+      if (!MAN[id]) { skipped++; continue; }
+      await new Promise((res) => {
+        try {
+          const tx = this.db.transaction('clips', 'readwrite');
+          tx.objectStore('clips').put(f, id);
+          tx.oncomplete = res;
+          tx.onerror = res;
+        } catch { res(); }
+      });
+      stored++;
+    }
+    Object.values(this.urls).forEach(u => URL.revokeObjectURL(u));
+    this.urls = {};
+    this.clipCount = await this.countClips();
+    if (this.clipCount > 0) this.mode = 'idb';
+    renderLydUi();
+    render();
+    toast('La inn ' + stored + ' klipp' + (skipped ? ', hoppet over ' + skipped : ''));
+  },
+
+  async clear() {
+    if (!this.db) return;
+    await new Promise((res) => {
+      try {
+        const tx = this.db.transaction('clips', 'readwrite');
+        tx.objectStore('clips').clear();
+        tx.oncomplete = res;
+        tx.onerror = res;
+      } catch { res(); }
+    });
+    Object.values(this.urls).forEach(u => URL.revokeObjectURL(u));
+    this.urls = {};
+    this.clipCount = 0;
+    this.mode = 'none';
+    renderLydUi();
+    render();
+    this.init();
+  }
+};
+
+const totalClips = Object.keys(MAN).length;
+
+/* ==================================================================
+   STEP FLOW
+   ================================================================== */
+function currentChecks() {
+  return state.checks && state.checks.step === state.currentStep ? state.checks.indices : [];
+}
+
+function toggleCheck(idx) {
+  const cur = currentChecks();
+  const updated = cur.includes(idx) ? cur.filter(i => i !== idx) : [...cur, idx];
+  state.checks = { step: state.currentStep, indices: updated };
+  saveState();
+  render();
+}
+
+function markDone() {
+  state.completed.push({ step: state.currentStep, date: todayISO() });
+  state.currentStep += 1;
+  state.checks = { step: state.currentStep, indices: [] };
+  selectedSquare = null;
+  saveState();
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function undoLast() {
+  if (state.completed.length === 0) return;
+  if (!confirm('Angre siste steg? / Undo the last step?')) return;
+  const last = state.completed.pop();
+  state.currentStep = last.step;
+  state.checks = { step: state.currentStep, indices: [] };
+  selectedSquare = null;
+  saveState();
+  render();
+}
+
+function resetAll() {
+  if (!confirm('Starte helt på nytt? Dette kan ikke angres. / Start over? This cannot be undone.')) return;
+  state = defaultState();
+  selectedSquare = null;
+  saveState();
+  closeSettings();
+  render();
+}
+
+function selectSquare(step) {
+  selectedSquare = selectedSquare === step ? null : step;
+  renderSquareInfo();
+  renderGrid();
+}
+
+/* ==================================================================
+   RENDER
+   ================================================================== */
+const playSvg = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+const gearSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
+
+function audioControls(id, label) {
+  const mut = lyd.mode === 'none' ? ' muted' : '';
+  return '<span class="item-controls">' +
+    '<button class="slow-btn' + mut + '" onclick="lyd.play(\'' + id + '\', true, this)" aria-label="Sakte: ' + esc(label) + '">SAKTE</button>' +
+    '<button class="play-btn' + mut + '" onclick="lyd.play(\'' + id + '\', false, this)" aria-label="Spill av: ' + esc(label) + '">' + playSvg + '</button>' +
+    '</span>';
+}
+
+function renderSquareInfo() {
+  const el = document.getElementById('squareInfo');
+  if (!el) return;
+  if (selectedSquare === null) { el.textContent = ''; return; }
+  const done = state.completed.find(c => c.step === selectedSquare);
+  if (done) el.textContent = 'Steg ' + selectedSquare + ', fullført ' + formatDate(done.date);
+  else if (selectedSquare === state.currentStep) el.textContent = 'Steg ' + selectedSquare + ', ditt neste steg / your next step';
+  else el.textContent = 'Steg ' + selectedSquare + ', kommer senere / coming later';
+}
+
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  if (!grid) return;
+  const doneSet = new Set(state.completed.map(c => c.step));
+  let html = '';
+  for (let i = 1; i <= TOTAL; i++) {
+    let cls = 'square';
+    if (doneSet.has(i)) cls += ' done';
+    else if (i === state.currentStep) cls += ' current';
+    if (selectedSquare === i) cls += ' selected';
+    html += '<button class="' + cls + '" aria-label="Steg ' + i + '" onclick="selectSquare(' + i + ')"></button>';
+  }
+  grid.innerHTML = html;
+}
+
+function renderLydUi() {
+  const st = document.getElementById('lydStatus');
+  if (!st) return;
+  if (lyd.mode === 'idb') {
+    st.innerHTML = '<span class="st-ok">Lydpakke lastet inn:</span> ' + lyd.clipCount + ' av ' + totalClips + ' klipp.';
+  } else if (lyd.mode === 'folder') {
+    st.innerHTML = '<span class="st-ok">Spiller fra mappen ' + LYD_DIR + '</span> ved siden av filen.';
+  } else {
+    st.innerHTML = '<span class="st-no">Ingen lyd funnet. / No sound found.</span>';
+  }
+}
+
+function render() {
+  const app = document.getElementById('app');
+
+  const topbar = '<div class="topbar">' +
+    '<div class="brand">Norsk A2</div>' +
+    '<button class="gear-btn" onclick="openSettings()" aria-label="Innstillinger / Settings" title="Innstillinger">' + gearSvg + '</button>' +
+  '</div>';
+
+  if (state.currentStep > TOTAL) {
+    app.innerHTML = topbar +
+      '<div class="finished">' +
+        '<div class="big">Hundre.</div>' +
+        '<div style="color:#57534e;margin-bottom:0.5rem">A2 er ditt. Fem hundre setninger til sitter i munnen.</div>' +
+        '<div style="color:var(--muted);font-size:0.875rem;font-style:italic;margin-bottom:3rem">One hundred more steps done. B1 is waiting.</div>' +
+        '<button class="text-btn" onclick="undoLast()">Angre siste steg</button>' +
+        '<button class="text-btn" onclick="resetAll()">Start på nytt</button>' +
+      '</div>';
+    return;
+  }
+
+  const block = blockOf(state.currentStep);
+  const st = STEPS[state.currentStep - 1];
+  const ids = ids5(state.currentStep);
+  const checked = currentChecks();
+  const allChecked = checked.length >= 5;
+  const doneCount = state.completed.length;
+
+  const lastDone = doneCount ? state.completed[doneCount - 1].date : null;
+  const daysAway = lastDone ? Math.floor((Date.now() - new Date(lastDone + 'T00:00:00').getTime()) / 86400000) : 0;
+  const welcomeBack = daysAway >= 7 ? '<p class="welcome-back">Lenge siden sist. Ett steg er nok i dag. / Been a while. One step is enough today.</p>' : '';
+
+  const banner = lyd.mode === 'none'
+    ? '<div class="lyd-banner">Appen virker uten lyd, men den er best med ekte norsk stemme. / The app works without sound, but it is best with a real Norwegian voice. <button onclick="openSettings()">Innstillinger / Settings</button></div>'
+    : '';
+
+  let items = '';
+  ids.forEach((id, i) => {
+    const isChecked = checked.includes(i);
+    items += '<li class="item">' +
+      '<div class="item-row">' +
+        '<input type="checkbox" id="chk' + i + '"' + (isChecked ? ' checked' : '') + ' onchange="toggleCheck(' + i + ')" aria-label="Setning ' + (i + 1) + '">' +
+        '<label for="chk' + i + '" class="item-text">' +
+          '<div class="item-name sent' + (isChecked ? ' checked' : '') + '">' + esc(MAN[id]) + '</div>' +
+          '<div class="item-spec">' + esc(st.en[i]) + '</div>' +
+        '</label>' +
+        audioControls(id, MAN[id]) +
+      '</div>' +
+    '</li>';
+  });
+
+  app.innerHTML = topbar + banner +
+    '<header class="step-header">' +
+      '<div class="label step-label">Steg / Step</div>' +
+      '<div class="step-num">' + state.currentStep + '</div>' +
+      '<div class="step-of">av hundre</div>' +
+    '</header>' +
+    '<section class="step-body">' +
+      welcomeBack +
+      '<div class="block-title">' + esc(block.title) + '</div>' +
+      '<div class="step-title">' + esc(st.t) + '</div>' +
+      '<div class="block-min">cirka ' + block.minutes + ' minutter</div>' +
+      '<p class="note">' + esc(block.note) + '</p>' +
+      '<div class="tip">' + esc(st.tip) + '</div>' +
+      '<div class="play-all-row"><button class="seq-btn" onclick="lyd.playSeq(ids5(state.currentStep), this)">Spill alle / Play all</button></div>' +
+      '<ul class="items">' + items + '</ul>' +
+      '<button class="done-btn' + (allChecked ? ' ready' : '') + '"' + (allChecked ? '' : ' disabled') + ' onclick="markDone()">' +
+        (allChecked ? 'Ferdig, neste steg' : 'Ferdig (' + checked.length + '/5)') +
+      '</button>' +
+    '</section>' +
+    '<section class="grid-section">' +
+      '<div class="grid-header">' +
+        '<div class="label">Din reise / Your journey</div>' +
+        '<div class="grid-count">' + doneCount + ' <span style="color:var(--faint);font-size:0.875rem">/ ' + TOTAL + '</span></div>' +
+      '</div>' +
+      '<div class="grid" id="grid"></div>' +
+      '<div class="square-info" id="squareInfo"></div>' +
+    '</section>' +
+    '<div class="footer-actions">' +
+      '<button class="text-btn" onclick="undoLast()"' + (doneCount === 0 ? ' disabled' : '') + '>Angre siste steg</button>' +
+      '<button class="text-btn" onclick="openSettings()">Innstillinger</button>' +
+    '</div>';
+
+  renderGrid();
+  renderSquareInfo();
+}
+
+/* ==================================================================
+   SETTINGS + BOOT
+   ================================================================== */
+const dlg = document.getElementById('settings');
+function openSettings() {
+  renderLydUi();
+  if (dlg.showModal) dlg.showModal();
+  else dlg.setAttribute('open', '');
+}
+function closeSettings() {
+  if (dlg.close) dlg.close();
+  else dlg.removeAttribute('open');
+}
+function clearLyd() {
+  if (!confirm('Fjerne alle innlastede lydklipp? / Remove all loaded sound clips?')) return;
+  lyd.clear().then(() => toast('Lyd fjernet'));
+}
+
+document.getElementById('lydFiles').addEventListener('change', (e) => {
+  const files = Array.from(e.target.files || []);
+  e.target.value = '';
+  if (files.length) lyd.importFiles(files);
+});
+dlg.addEventListener('click', (e) => { if (e.target === dlg) closeSettings(); });
+
+loadState();
+render();
+lyd.init();
+</script>
+</body>
+</html>
